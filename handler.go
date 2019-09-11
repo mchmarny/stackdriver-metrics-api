@@ -25,9 +25,9 @@ func metricCounterHandler(c *gin.Context) {
 		return
 	}
 
-	var content map[string]interface{}
-	if err := c.ShouldBind(&content); err != nil {
-		logger.Println("Error while parsing posted content")
+	var content []map[string]interface{}
+	if err := c.BindJSON(&content); err != nil {
+		logger.Printf("Error while parsing posted content: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid Content",
 			"status":  http.StatusBadRequest,

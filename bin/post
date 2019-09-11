@@ -7,4 +7,4 @@ SERVICE_URL=$(gcloud beta run services describe metric-maker-service \
 curl -X POST \
      -H "Content-Type: application/json" \
      -d "@sample/test.json" \
-     "${SERVICE_URL}/counter/users"
+     "${SERVICE_URL}/v1/counter/users"

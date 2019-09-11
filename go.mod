@@ -9,5 +9,6 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/mchmarny/gcputil v0.2.1
 	github.com/pkg/errors v0.8.1
+	github.com/stretchr/testify v1.4.0
 	google.golang.org/genproto v0.0.0-20190905072037-92dd089d5514
 )

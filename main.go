@@ -22,26 +22,29 @@ var (
 	logger    = log.New(os.Stdout, "", 0)
 )
 
-func main() {
+func setupRouter(debug bool) *gin.Engine {
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
-	r.Use(gin.Recovery())
+	if !debug {
+		r.Use(gin.Recovery())
+	}
 
-	// routes
 	r.GET("/", defaultRequestHandler)
 	r.GET("/health", healthHandler)
 
-	// api
 	v1 := r.Group("/v1")
 	{
-		v1.GET("/counter/:metric", metricCounterHandler)
+		v1.POST("/counter/:metric", metricCounterHandler)
 	}
 
-	// server
+   return r
+}
+
+func main() {
 	hostPost := net.JoinHostPort("0.0.0.0", port)
 	logger.Printf("Server starting: %s \n", hostPost)
-	if err := r.Run(hostPost); err != nil {
+	if err := setupRouter(false).Run(hostPost); err != nil {
 		logger.Fatal(err)
 	}
 }

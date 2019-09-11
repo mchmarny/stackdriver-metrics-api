@@ -8,5 +8,5 @@ gcloud beta run deploy metric-maker-service \
 	--image gcr.io/$PROJECT/metric-maker-service:0.0.1 \
 	--platform managed \
 	--region us-central1 \
-	--service-account metric-maker-service-sa@$cloudylabs.iam.gserviceaccount.com
+	--service-account metric-maker-service-sa@${PROJECT}.iam.gserviceaccount.com
 
