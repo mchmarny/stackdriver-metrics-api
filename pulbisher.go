@@ -30,7 +30,7 @@ func post(ctx context.Context, metric string, when time.Time, count int64) error
 			EndTime:   &googlepb.Timestamp{Seconds: when.Unix()},
 		},
 		Value: &monitoringpb.TypedValue{
-			Value: &monitoringpb.TypedValue_Int64Value{Int64Value: m},
+			Value: &monitoringpb.TypedValue_Int64Value{Int64Value: count},
 		},
 	}
 

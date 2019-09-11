@@ -6,5 +6,5 @@ go mod vendor
 PROJECT=$(gcloud config get-value project)
 
 gcloud builds submit \
-    --tag gcr.io/$PROJECT/custom-metric-maker:0.0.1 .
+    --tag gcr.io/$PROJECT/metric-maker-service:0.0.1 .
 

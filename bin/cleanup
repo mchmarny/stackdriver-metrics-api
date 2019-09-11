@@ -1,8 +1,8 @@
 #!/bin/bash
 
-gcloud beta run services delete custom-metric-maker \
+gcloud beta run services delete metric-maker-service \
     --platform managed \
     --region us-west1
 
 gcloud iam service-accounts delete \
-    custom-metric-maker-sa@$cloudylabs.iam.gserviceaccount.com
+    metric-maker-service-sa@$cloudylabs.iam.gserviceaccount.com

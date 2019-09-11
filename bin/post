@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVICE_URL=$(gcloud beta run services describe custom-metric-maker \
+SERVICE_URL=$(gcloud beta run services describe metric-maker-service \
     --region us-central1 \
     --format="value(status.domain)")
 
