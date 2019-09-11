@@ -44,7 +44,7 @@ func metricCounterHandler(c *gin.Context) {
 
 	if err := post(c.Request.Context(),
 		resp.Metric, resp.Timestamp, resp.Result); err != nil {
-		logger.Println("Error posting metrics")
+		logger.Printf("Error posting metrics: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Error processing metric",
 			"status":  http.StatusInternalServerError,
