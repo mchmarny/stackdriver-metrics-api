@@ -12,12 +12,12 @@ func healthHandler(c *gin.Context) {
 	c.String(http.StatusOK, "OK")
 }
 
-func apiRequestHandler(c *gin.Context) {
+func metricCounterHandler(c *gin.Context) {
 
-	msg := c.Param("msg")
-	logger.Printf("Message: %s", msg)
-	if msg == "" {
-		logger.Println("Error on nil msg parameter")
+	metric := c.Param("metric")
+	logger.Printf("Message: %s", metric)
+	if metric == "" {
+		logger.Println("Error on nil metric parameter")
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Null Argument",
 			"status":  http.StatusBadRequest,
@@ -25,11 +25,31 @@ func apiRequestHandler(c *gin.Context) {
 		return
 	}
 
+	var content map[string]interface{}
+	if err := c.ShouldBind(&content); err != nil {
+		logger.Println("Error while parsing posted content")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid Content",
+			"status":  http.StatusBadRequest,
+		})
+		return
+	}
+
 	resp := &ResponseObject{
-		ID:      newID(),
-		Ts:      time.Now().UTC().String(),
-		Release: release,
-		Message: msg,
+		RequestID: newID(),
+		Timestamp: time.Now().UTC(),
+		Metric:    metric,
+		Result:    int64(len(content)),
+	}
+
+	if err := post(c.Request.Context(),
+		resp.Metric, resp.Timestamp, resp.Result); err != nil {
+		logger.Println("Error posting metrics")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Error processing metric",
+			"status":  http.StatusInternalServerError,
+		})
+		return
 	}
 
 	c.JSON(http.StatusOK, resp)
@@ -38,17 +58,17 @@ func apiRequestHandler(c *gin.Context) {
 
 func defaultRequestHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Try the API at /v1/message/:msg",
+		"counter": "POST /v1/counter/:metric",
 		"status":  http.StatusOK,
 	})
 }
 
 // ResponseObject represents body of the request response
 type ResponseObject struct {
-	ID      string `json:"id"`
-	Ts      string `json:"ts"`
-	Release string `json:"rel"`
-	Message string `json:"msg,omitempty"`
+	RequestID string    `json:"id"`
+	Timestamp time.Time `json:"ts"`
+	Metric    string    `json:"metric"`
+	Result    int64     `json:"result,omitempty"`
 }
 
 func newID() string {

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# GCP project name
+PROJECT=$(gcloud config get-value project)
+
+gcloud iam service-accounts create custom-metric-maker-sa \
+	--display-name "Custom Metrics API Service Account"
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member serviceAccount:custom-metric-maker-sa@$cloudylabs.iam.gserviceaccount.com \
+	--role roles/logging.logWriter
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member serviceAccount:custom-metric-maker-sa@$cloudylabs.iam.gserviceaccount.com \
+	--role roles/cloudtrace.agent

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "User",
+    "site_admin": false,
+    "id": 1
+  },
+  {
+    "type": "User",
+    "site_admin": false,
+    "id": 2
+  },
+  {
+    "type": "User",
+    "site_admin": false,
+    "id": 3
+  },
+  {
+    "type": "User",
+    "site_admin": false,
+    "id": 4
+  },
+  {
+    "type": "User",
+    "site_admin": false,
+    "id": 5
+  }
+]

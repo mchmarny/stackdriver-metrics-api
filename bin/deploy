@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# GCP project name
+PROJECT=$(gcloud config get-value project)
+
+gcloud beta run deploy custom-metric-maker \
+	--allow-unauthenticated \
+	--image gcr.io/$PROJECT/custom-metric-maker:0.0.1 \
+	--platform managed \
+	--region us-central1 \
+	--service-account custom-metric-maker-sa@$cloudylabs.iam.gserviceaccount.com
+

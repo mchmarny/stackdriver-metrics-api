@@ -1,8 +1,8 @@
 #!/bin/bash
 
-gcloud beta run services delete gotemplate \
-    --platform gke \
+gcloud beta run services delete custom-metric-maker \
+    --platform managed \
     --region us-west1
 
 gcloud iam service-accounts delete \
-    gotemplate-sa@$cloudylabs-public.iam.gserviceaccount.com
+    custom-metric-maker-sa@$cloudylabs.iam.gserviceaccount.com

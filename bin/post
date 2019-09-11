@@ -1,0 +1,10 @@
+#!/bin/bash
+
+SERVICE_URL=$(gcloud beta run services describe custom-metric-maker \
+    --region us-central1 \
+    --format="value(status.domain)")
+
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d "@sample/test.json" \
+     "${SERVICE_URL}/counter/users"
